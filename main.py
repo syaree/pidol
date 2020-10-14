@@ -1,23 +1,26 @@
-import gi
-gi.require_version("Gtk", "3.0")
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
+from PyQt5.QtCore import Qt
 
-from gi.repository import Gtk
 
+class MainWindow(QMainWindow):
+    def __init__(self, *args, **kwargs):
+        super(MainWindow, self).__init__(*args, **kwargs)
 
-class Handler:
-    def onDestroy(self, _):
-        Gtk.main_quit()
+        self.setWindowTitle("PIDOL")
+        self.setMinimumSize(400, 250)
 
-    def onButtonPressed(self, _):
-        print("Clicked!")
+        label = QLabel()
+        label.setText("Selamat Datang")
+        label.setAlignment(Qt.AlignCenter)
+
+        self.setCentralWidget(label)
 
 
 if __name__ == "__main__":
-    builder = Gtk.Builder()
-    builder.add_from_file("ui.glade")
-    builder.connect_signals(Handler())
+    app = QApplication(sys.argv)
 
-    window = builder.get_object("window1")
-    window.show_all()
+    window = MainWindow()
+    window.show()
 
-    Gtk.main()
+    sys.exit(app.exec_())
