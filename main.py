@@ -1,25 +1,26 @@
-import gi
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
+from PyQt5.QtCore import Qt
 
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
 
+class MainWindow(QMainWindow):
+    def __init__(self, *args, **kwargs):
+        super(MainWindow, self).__init__(*args, **kwargs)
 
-class App(Gtk.Window):
-    def __init__(self):
-        Gtk.Window.__init__(self, title="Coba GTK")
+        self.setWindowTitle("PIDOL")
+        self.setMinimumSize(400, 250)
 
-        self.button = Gtk.Button(label="Click Here")
-        self.button.connect("clicked", self.on_btn_click)
+        label = QLabel()
+        label.setText("Selamat Datang")
+        label.setAlignment(Qt.AlignCenter)
 
-        self.add(self.button)
-
-    def on_btn_click(self, widget):
-        print("Uji coba menggunakan GTK")
+        self.setCentralWidget(label)
 
 
 if __name__ == "__main__":
-    window = App()
-    window.connect("destroy", Gtk.main_quit)
-    window.show_all()
+    app = QApplication(sys.argv)
 
-    Gtk.main()
+    window = MainWindow()
+    window.show()
+
+    sys.exit(app.exec_())
