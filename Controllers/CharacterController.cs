@@ -26,5 +26,12 @@ namespace pidol.Controllers
 
             return Ok(selected_character);
         }
+
+        [HttpPost]
+        public IActionResult AddCharacter(Character baru) {
+            _characters.Add(baru);
+
+            return Ok(_characters);
+        }
     }
 }
