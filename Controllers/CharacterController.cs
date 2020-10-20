@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using pidol.Models;
 using pidol.Services.CharacterServices;
+using System.Threading.Tasks;
 
 namespace pidol.Controllers
 {
@@ -19,18 +20,18 @@ namespace pidol.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get() {
-            return Ok(_characterService.GetAllCharacters());
+        public async Task<IActionResult> Get() {
+            return Ok(await _characterService.GetAllCharacters());
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetSingle(int id) {
-            return Ok(_characterService.GetCharacterById(id));
+        public async Task<IActionResult> GetSingle(int id) {
+            return Ok(await _characterService.GetCharacterById(id));
         }
 
         [HttpPost]
-        public IActionResult AddCharacter(Character baru) {
-            return Ok(_characterService.AddCharacter(baru));
+        public async Task<IActionResult> AddCharacter(Character baru) {
+            return Ok(await _characterService.AddCharacter(baru));
         }
     }
 }
