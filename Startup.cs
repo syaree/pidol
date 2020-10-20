@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+using pidol.Services.CharacterServices;
+
 namespace pidol
 {
     public class Startup
@@ -26,6 +28,7 @@ namespace pidol
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped<ICharacterService, CharacterService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
