@@ -12,21 +12,29 @@ namespace pidol.Services.CharacterServices
             new Character { Id = 2, Name = "Jackie" }
         };
 
-        public async Task<List<Character>> AddCharacter(Character newCharacter)
+        public async Task<ServiceResponse<List<Character>>> AddCharacter(Character newCharacter)
         {
+            ServiceResponse<List<Character>> serviceResponse = new ServiceResponse<List<Character>>();
             _characters.Add(newCharacter);
+            serviceResponse.Data = _characters;
 
-            return _characters;
+            return serviceResponse;
         }
 
-        public async Task<List<Character>> GetAllCharacters()
+        public async Task<ServiceResponse<List<Character>>> GetAllCharacters()
         {
-            return _characters;
+            ServiceResponse<List<Character>> serviceResponse = new ServiceResponse<List<Character>>();
+            serviceResponse.Data = _characters;
+
+            return serviceResponse;
         }
 
-        public async Task<Character> GetCharacterById(int id)
+        public async Task<ServiceResponse<Character>> GetCharacterById(int id)
         {
-            return _characters.FirstOrDefault<Character>(chr => chr.Id.Equals(id));
+            ServiceResponse<Character> serviceResponse = new ServiceResponse<Character>();
+            serviceResponse.Data = _characters.FirstOrDefault<Character>(chr => chr.Id.Equals(id));
+
+            return serviceResponse;
         }
     }
 }
