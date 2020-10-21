@@ -1,10 +1,8 @@
-using System.Linq;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-
-using pidol.Models;
-using pidol.Services.CharacterServices;
 using System.Threading.Tasks;
+
+using pidol.Services.CharacterService;
+using pidol.Dtos.Character;
 
 namespace pidol.Controllers
 {
@@ -30,7 +28,7 @@ namespace pidol.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCharacter(Character baru) {
+        public async Task<IActionResult> AddCharacter(AddCharacterDto baru) {
             return Ok(await _characterService.AddCharacter(baru));
         }
     }
