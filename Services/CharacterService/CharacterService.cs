@@ -1,38 +1,41 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using pidol.Dtos.Character;
 using pidol.Models;
 
-namespace pidol.Services.CharacterServices
+namespace pidol.Services.CharacterService
 {
     public class CharacterService : ICharacterService
     {
-        private static List<Character> _characters = new List<Character> {
-            new Character { Id = 1 },
-            new Character { Id = 2, Name = "Jackie" }
+        private static List<GetCharacterDto> _characters = new List<GetCharacterDto> {
+            new GetCharacterDto { Id = 1 },
+            new GetCharacterDto { Id = 2, Name = "Jackie" }
         };
 
-        public async Task<ServiceResponse<List<Character>>> AddCharacter(Character newCharacter)
+        public async Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter)
         {
-            ServiceResponse<List<Character>> serviceResponse = new ServiceResponse<List<Character>>();
+            var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
             _characters.Add(newCharacter);
             serviceResponse.Data = _characters;
 
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<Character>>> GetAllCharacters()
+        public async Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters()
         {
-            ServiceResponse<List<Character>> serviceResponse = new ServiceResponse<List<Character>>();
+            var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
             serviceResponse.Data = _characters;
 
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<Character>> GetCharacterById(int id)
+        public async Task<ServiceResponse<GetCharacterDto>> GetCharacterById(int id)
         {
-            ServiceResponse<Character> serviceResponse = new ServiceResponse<Character>();
-            serviceResponse.Data = _characters.FirstOrDefault<Character>(chr => chr.Id.Equals(id));
+            var serviceResponse = new ServiceResponse<GetCharacterDto>
+            {
+                Data = _characters.FirstOrDefault<GetCharacterDto>(chr => chr.Id.Equals(id))
+            };
 
             return serviceResponse;
         }
