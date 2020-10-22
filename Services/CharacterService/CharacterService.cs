@@ -56,5 +56,29 @@ namespace pidol.Services.CharacterService
 
             return serviceResponse;
         }
+        
+        public async Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(UpdateCharacterDto updatedCharacter)
+        {
+            var selectedCharacter = _characters.FirstOrDefault(chr => chr.Id.Equals(updatedCharacter.Id));
+            var serviceResponse = new ServiceResponse<GetCharacterDto>();
+
+            if (selectedCharacter != null)
+            {
+                selectedCharacter.Class = updatedCharacter.Class;
+                selectedCharacter.Defense = updatedCharacter.Defense;
+                selectedCharacter.Intelligence = updatedCharacter.Intelligence;
+                selectedCharacter.Name = updatedCharacter.Name;
+                selectedCharacter.Strength = updatedCharacter.Strength;
+                selectedCharacter.HitPoints = updatedCharacter.HitPoints;
+
+                serviceResponse.Data = selectedCharacter;
+            } else
+            {
+                serviceResponse.Data = null;
+                serviceResponse.Success = false;
+            }
+
+            return serviceResponse;
+        }
     }
 }
