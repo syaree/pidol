@@ -14,7 +14,7 @@ namespace pidol.Controllers
 
         public CharacterController(ICharacterService characterService)
         {
-            this._characterService = characterService;
+            _characterService = characterService;
         }
 
         [HttpGet]
@@ -30,6 +30,19 @@ namespace pidol.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCharacter(AddCharacterDto baru) {
             return Ok(await _characterService.AddCharacter(baru));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateCharacter(UpdateCharacterDto baru)
+        {
+            var character = await _characterService.UpdateCharacter(baru);
+
+            if (character.Success)
+            {
+                return Ok(character);
+            }
+
+            return NotFound(character);
         }
     }
 }
