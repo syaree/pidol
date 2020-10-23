@@ -44,5 +44,18 @@ namespace pidol.Controllers
 
             return NotFound(character);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCharacter(int id)
+        {
+            var status = await _characterService.DeleteCharacter(id);
+
+            if (status.Success)
+            {
+                return Ok(status);
+            }
+
+            return NotFound(status);
+        }
     }
 }
