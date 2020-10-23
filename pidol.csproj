@@ -8,5 +8,10 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="ios\Runner\Assets.xcassets\AppIcon.appiconset\Contents.json" />
+    <_ContentIncludedByDefault Remove="ios\Runner\Assets.xcassets\LaunchImage.imageset\Contents.json" />
+  </ItemGroup>
+
 
 </Project>
