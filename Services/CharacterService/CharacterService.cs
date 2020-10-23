@@ -80,5 +80,23 @@ namespace pidol.Services.CharacterService
 
             return serviceResponse;
         }
+
+        public async Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(int id)
+        {
+            var deletedCharacter = _characters.RemoveAll(chr => chr.Id.Equals(id));
+            var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
+
+            if (deletedCharacter > 0)
+            {
+                serviceResponse.Success = true;
+                serviceResponse.Data = _characters;
+            }
+            else
+            {
+                serviceResponse.Success = false;
+            }
+
+            return serviceResponse;
+        }
     }
 }
