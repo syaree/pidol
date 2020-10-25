@@ -61,7 +61,7 @@ namespace pidol.Services.CharacterService
 
             return serviceResponse;
         }
-        
+
         public async Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(UpdateCharacterDto updatedCharacter)
         {
             var selectedCharacter = _characters.FirstOrDefault(chr => chr.Id.Equals(updatedCharacter.Id));
