@@ -7,11 +7,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
+using pidol.Data;
 using pidol.Services.CharacterService;
 
 namespace pidol
@@ -31,6 +32,8 @@ namespace pidol
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<ICharacterService, CharacterService>();
+            services.AddDbContext<DataContext>(options => 
+                options.UseSqlite(Configuration.GetConnectionString("SqliteConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
