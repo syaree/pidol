@@ -13,5 +13,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="ios\Runner\Assets.xcassets\AppIcon.appiconset\Contents.json" />
+    <_ContentIncludedByDefault Remove="ios\Runner\Assets.xcassets\LaunchImage.imageset\Contents.json" />
+  </ItemGroup>
+
 
 </Project>
