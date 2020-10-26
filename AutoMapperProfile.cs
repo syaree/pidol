@@ -9,7 +9,7 @@ namespace pidol
         public AutoMapperProfile()
         {
             CreateMap<Character, GetCharacterDto>();
-            CreateMap<AddCharacterDto, GetCharacterDto>();
+            CreateMap<AddCharacterDto, Character>();
         }
     }
 }
