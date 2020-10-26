@@ -27,14 +27,14 @@ namespace pidol.Services.CharacterService
 
         public async Task<ServiceResponse<List<GetCharacterDto>>> AddCharacter(AddCharacterDto newCharacter)
         {
-            var character = _mapper.Map<GetCharacterDto>(newCharacter);
-            character.Id = _characters.Max(chr => chr.Id) + 1;
+            var chr = _mapper.Map<Character>(newCharacter);
 
-            _characters.Add(character);
+            await _context.Characters.AddAsync(chr);
+            await _context.SaveChangesAsync();
 
-            var serviceResponse = new ServiceResponse<List<GetCharacterDto>>()
+            var serviceResponse = new ServiceResponse<List<GetCharacterDto>>
             {
-                Data = _mapper.Map<List<GetCharacterDto>>(_characters)
+                Data = await _context.Characters.Select(chr => _mapper.Map<GetCharacterDto>(chr)).ToListAsync()
             };
 
             return serviceResponse;
