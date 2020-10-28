@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,11 +14,6 @@ namespace pidol.Services.CharacterService
     {
         private readonly IMapper _mapper;
         private readonly DataContext _context;
-
-        private static List<GetCharacterDto> _characters = new List<GetCharacterDto> {
-            new GetCharacterDto { Id = 1 },
-            new GetCharacterDto { Id = 2, Name = "Jackie" }
-        };
 
         public CharacterService(IMapper mapper, DataContext context)
         {
@@ -64,7 +60,7 @@ namespace pidol.Services.CharacterService
 
         public async Task<ServiceResponse<GetCharacterDto>> UpdateCharacter(UpdateCharacterDto updatedCharacter)
         {
-            var selectedCharacter = _characters.FirstOrDefault(chr => chr.Id.Equals(updatedCharacter.Id));
+            var selectedCharacter = await _context.Characters.FirstOrDefaultAsync(chr => chr.Id.Equals(updatedCharacter.Id));
             var serviceResponse = new ServiceResponse<GetCharacterDto>();
 
             if (selectedCharacter != null)
@@ -76,7 +72,10 @@ namespace pidol.Services.CharacterService
                 selectedCharacter.Strength = updatedCharacter.Strength;
                 selectedCharacter.HitPoints = updatedCharacter.HitPoints;
 
-                serviceResponse.Data = selectedCharacter;
+                serviceResponse.Data = _mapper.Map<GetCharacterDto>(selectedCharacter);
+
+                _context.Characters.Update(selectedCharacter);
+                await _context.SaveChangesAsync();
             } else
             {
                 serviceResponse.Data = null;
@@ -88,17 +87,22 @@ namespace pidol.Services.CharacterService
 
         public async Task<ServiceResponse<List<GetCharacterDto>>> DeleteCharacter(int id)
         {
-            var deletedCharacter = _characters.RemoveAll(chr => chr.Id.Equals(id));
             var serviceResponse = new ServiceResponse<List<GetCharacterDto>>();
 
-            if (deletedCharacter > 0)
+            try
             {
+                var selectedCharacter = await _context.Characters.FirstOrDefaultAsync(chr => chr.Id.Equals(id));
+
+                _context.Characters.Remove(selectedCharacter);
+                await _context.SaveChangesAsync();
+
                 serviceResponse.Success = true;
-                serviceResponse.Data = _characters;
+                serviceResponse.Data = _context.Characters.Select(chr => _mapper.Map<GetCharacterDto>(chr)).ToList();
             }
-            else
+            catch (Exception err)
             {
                 serviceResponse.Success = false;
+                serviceResponse.Message = err.Message;
             }
 
             return serviceResponse;
