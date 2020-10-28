@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace pidol.Models
 {
     public class User
@@ -6,5 +8,6 @@ namespace pidol.Models
         public string Username { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
+        public List<Character> Characters { get; set; }
     }
 }
